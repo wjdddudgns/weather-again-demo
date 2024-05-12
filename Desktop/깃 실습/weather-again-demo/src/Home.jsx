@@ -1,38 +1,92 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { PacmanLoader } from 'react-spinners';
 
 function Home() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const login = useNavigate();
+  const [loginForm, setLoginForm] = useState({
+    id: '',
+    password: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleLogin = () => {
-    if (username === 'jyh' && password === '1234') {
-    login.push('/search');
-    } else {
-      alert('아이디 또는 비밀번호가 잘못되었습니다.');
-    }
+    setLoading(true);
+
+    setTimeout(() => {
+      if (loginForm.id === 'jyh' && loginForm.password === '1234') {
+        setLoading(false);
+        navigate('/search');
+      } else {
+        setLoading(false);
+        alert('아이디 또는 비밀번호가 잘못되었습니다.');
+      }
+    }, 3000);
+  };
+
+  const handleChangeLoginForm = (e) => {
+    const { name, value } = e.target;
+
+    setLoginForm({
+      ...loginForm,
+      [name]: value,
+    });
   };
 
   return (
-    <div>
-      <input
+    <HomeContainer>
+      <LoginTitle>LOGIN</LoginTitle>
+
+      <LoginInput
         type="text"
         placeholder="아이디"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        name="id"
+        value={loginForm.id}
+        onChange={handleChangeLoginForm}
       />
-      <input
+      <LoginInput
         type="password"
         placeholder="비밀번호"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        name="password"
+        value={loginForm.password}
+        onChange={handleChangeLoginForm}
       />
-      <button onClick={handleLogin}>로그인</button>
-    </div>
+      <LoginButton onClick={handleLogin}>로그인</LoginButton>
+      {loading && <PacmanLoader color="#36d7b7" />}
+    </HomeContainer>
   );
 }
 
 export default Home;
 
-// 버튼 스타일드-컴포넌트로 스타일 입혀오기!
+const HomeContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30%;
+`;
+
+const LoginInput = styled.input`
+  width: 100%;
+  height: 40px;
+  margin-bottom: 15px;
+  text-align: left;
+  padding-left: 10px;
+`;
+
+const LoginButton = styled.button`
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const LoginTitle = styled.p`
+  font-size: 36px;
+  font-weight: bolder;
+  display: flex;
+  align-items: center;
+  padding-bottom: 60px;
+`;
