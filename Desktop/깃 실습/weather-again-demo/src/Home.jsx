@@ -12,17 +12,29 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    setLoading(true);
+    // setLoading(true);
 
-    setTimeout(() => {
-      if (loginForm.id === 'jyh' && loginForm.password === '1234') {
-        setLoading(false);
+    // setTimeout(() => {
+    //   if (loginForm.id === 'jyh' && loginForm.password === '1234') {
+    //     setLoading(false);
+    //     <PacmanLoader color="#36d7b7" />
+    //     navigate('/search');
+    //   } else {
+    //     setLoading(false);
+    //     alert('아이디 또는 비밀번호가 잘못되었습니다.');
+    //   }
+    // }, 3000);
+
+    if (loginForm.id === 'jyh' && loginForm.password === '1234') {
+      setLoading(true);
+
+      setTimeout(() => {
+        // setLoading(false);
         navigate('/search');
-      } else {
-        setLoading(false);
-        alert('아이디 또는 비밀번호가 잘못되었습니다.');
-      }
-    }, 3000);
+      }, 3000);
+    } else {
+      alert('아이디 또는 비밀번호가 잘못되었습니다.');
+    }
   };
 
   const handleChangeLoginForm = (e) => {
@@ -36,24 +48,27 @@ function Home() {
 
   return (
     <HomeContainer>
-      <LoginTitle>LOGIN</LoginTitle>
+      {loading ? <PacmanLoader color="#36d7b7" /> : (
+        <>
+              <LoginTitle>LOGIN</LoginTitle>
 
-      <LoginInput
-        type="text"
-        placeholder="아이디"
-        name="id"
-        value={loginForm.id}
-        onChange={handleChangeLoginForm}
-      />
-      <LoginInput
-        type="password"
-        placeholder="비밀번호"
-        name="password"
-        value={loginForm.password}
-        onChange={handleChangeLoginForm}
-      />
-      <LoginButton onClick={handleLogin}>로그인</LoginButton>
-      {loading && <PacmanLoader color="#36d7b7" />}
+              <LoginInput
+                type="text"
+                placeholder="아이디"
+                name="id"
+                value={loginForm.id}
+                onChange={handleChangeLoginForm}
+              />
+              <LoginInput
+                type="password"
+                placeholder="비밀번호"
+                name="password"
+                value={loginForm.password}
+                onChange={handleChangeLoginForm}
+              />
+              <LoginButton onClick={handleLogin}>로그인</LoginButton>
+         </>
+      )}
     </HomeContainer>
   );
 }
