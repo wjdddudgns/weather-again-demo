@@ -9,32 +9,25 @@ function Home() {
     password: '',
     confirmPassword: '',
     isStudent: false,
+    UserName: '',
   });
   const [loading, setLoading] = useState(false);
   const [emailValid, setEmailValid] = useState(null);
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
+  const [passwordsMatch, setPasswordsMatch] = useState(null);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const isFormValid = emailValid && form.password === form.confirmPassword && form.password !== '' && form.confirmPassword !== '' && form.isStudent;
+    const isFormValid = emailValid && passwordsMatch && form.password !== '' && form.confirmPassword !== '' && form.UserName !== '';
     setIsButtonDisabled(!isFormValid);
-  }, [emailValid, form.password, form.confirmPassword, form.isStudent]);
+  }, [emailValid, passwordsMatch, form.password, form.confirmPassword, form.UserName]);
+
+  useEffect(() => {
+    setPasswordsMatch(form.password === form.confirmPassword);
+  }, [form.password, form.confirmPassword]);
 
   const handleLogin = () => {
     setLoading(true);
-
-    setTimeout(() => {
-      if (emailValid && form.password === form.confirmPassword) {
-        setLoading(false);
-        navigate('/search');
-      } else {
-        setLoading(false);
-        if (!emailValid) {
-          alert('입력한 정보가 유효하지 않습니다.');
-        }
-      }
-    }, 3000);
   };
 
   const handleChangeForm = (e) => {
@@ -53,10 +46,6 @@ function Home() {
         setEmailValid(false);
       }
     }
-
-    if (name === 'confirmPassword') {
-      setPasswordsMatch(value === form.password);
-    }
   };
 
   return (
@@ -70,7 +59,8 @@ function Home() {
         value={form.email}
         onChange={handleChangeForm}
       />
-      {emailValid === false && <ValidationMessage valid={emailValid}>형식이 틀렸습니다.</ValidationMessage>}
+      {emailValid === true && <ValidationMessage>형식이 맞습니다.</ValidationMessage>}
+      {emailValid === false && <ValidationMessage>형식이 틀렸습니다.</ValidationMessage>}
 
       <LoginInput
         type="password"
@@ -86,8 +76,17 @@ function Home() {
         value={form.confirmPassword}
         onChange={handleChangeForm}
       />
-            {!passwordsMatch && <ValidationMessage valid={passwordsMatch}>비밀번호가 틀렸습니다</ValidationMessage>}
-      
+      {passwordsMatch === true && form.password && form.confirmPassword && <ValidationMessage>비밀번호가 똑같습니다</ValidationMessage>}
+      {passwordsMatch === false && <ValidationMessage>비밀번호가 틀렸습니다</ValidationMessage>}
+
+      <LoginInput
+        type="text"
+        placeholder="이름"
+        name="UserName"
+        value={form.UserName}
+        onChange={handleChangeForm}
+      />
+
       <label>
         <input
           type="checkbox"
@@ -102,7 +101,6 @@ function Home() {
     </HomeContainer>
   );
 }
-
 export default Home;
 
 const HomeContainer = styled.div`
@@ -142,6 +140,6 @@ const LoginTitle = styled.p`
 `;
 
 const ValidationMessage = styled.p`
-  color: ${props => (props.valid ? 'green' : 'red')};
+  color: red;
   margin-bottom: 15px;
 `;
