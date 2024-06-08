@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import { PacmanLoader } from 'react-spinners';
+import { LoginData } from './ServerData';
 
 function Home() {
   const [loginForm, setLoginForm] = useState({
@@ -12,28 +13,24 @@ function Home() {
   const navigate = useNavigate();
 
   const handleLogin = () => {
-    // setLoading(true);
+    
+    // if (loginForm.id === 'jyh' && loginForm.password === '1234') {
+    //   setLoading(true);
 
-    // setTimeout(() => {
-    //   if (loginForm.id === 'jyh' && loginForm.password === '1234') {
-    //     setLoading(false);
-    //     <PacmanLoader color="#36d7b7" />
+    //   setTimeout(() => {
+    //     // setLoading(false);
     //     navigate('/search');
-    //   } else {
-    //     setLoading(false);
-    //     alert('아이디 또는 비밀번호가 잘못되었습니다.');
-    //   }
-    // }, 3000);
+    //   }, 3000);
+    // } else {
+    //   alert('아이디 또는 비밀번호가 잘못되었습니다.');
+    // }
 
-    if (loginForm.id === 'jyh' && loginForm.password === '1234') {
-      setLoading(true);
-
-      setTimeout(() => {
-        // setLoading(false);
-        navigate('/search');
-      }, 3000);
-    } else {
-      alert('아이디 또는 비밀번호가 잘못되었습니다.');
+    if (LoginData.message === "ok") {
+      localStorage.setItem('LoginId',loginForm.id); //해석: localStorage를 통해서 데이터를 저장하는데, 무엇을 저장하냐!? UserId라는 키와 loginForm(id, password)중 id를 가져온다~~
+      alert("로그인에 성공했습니다.");
+      navigate("/search");
+    }else{
+      alert("로그인에 실패했습니다.");
     }
   };
 

@@ -29,9 +29,14 @@ function App() {
     }
   }
 
-
+// Navigation도 만들어 준다. 이 Navigation은 선언한 적 없기 때문에 밑에 Navigation을 선언
+// Navigation의 내용은 백그라운드의 내용은 배경색을 aqua로 지정하고 글자색을 #fff로 지정한다
+// 그리고 flex를 사용한 뒤 space-between를 사용해서 정렬을 해주고 패딩도 줌
   return (
     <AppWrap>
+      <Navigation>
+        
+      </Navigation>
       <div className="appContentWrap">
         <input
           placeholder="도시를 입력하세요"
@@ -73,7 +78,14 @@ const AppWrap = styled.div`
     border: 2px black solid;
     border-radius: 16px;
   }
+`;
 
+const Navigation = styled.div`
+  background-color: aqua;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
 `;
 
 const ResultWrap = styled.div`
