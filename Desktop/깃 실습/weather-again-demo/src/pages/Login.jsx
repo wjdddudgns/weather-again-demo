@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { PacmanLoader } from 'react-spinners';
 import { LoginData } from './ServerData';
 
-function Home() {
+function Login() {
   const [loginForm, setLoginForm] = useState({
     id: '',
     password: '',
@@ -26,7 +26,7 @@ function Home() {
     // }
 
     if (LoginData.message === "ok") {
-      localStorage.setItem('LoginId',loginForm.id); //해석: localStorage를 통해서 데이터를 저장하는데, 무엇을 저장하냐!? UserId라는 키와 loginForm(id, password)중 id를 가져온다~~
+      localStorage.setItem('LoginId',"정영훈"); //해석: localStorage를 통해서 데이터를 저장하는데, 무엇을 저장하냐!? UserId라는 키와 loginForm(id, password)중 id를 가져온다~~
       alert("로그인에 성공했습니다.");
       navigate("/search");
     }else{
@@ -70,7 +70,7 @@ function Home() {
   );
 }
 
-export default Home;
+export default Login;
 
 const HomeContainer = styled.div`
   display: flex;

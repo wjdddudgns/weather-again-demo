@@ -2,15 +2,13 @@ import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import Nav from '../../../components/Nav';
 
-function App() {
+function Search() {
   const [location, setLocation] = useState('');
   const [result, setResult] = useState({});
   const API_KEY = "27f698387acafacc824c5aac95fda23a";
   const navigate=useNavigate();
-  const handleClickButton=() => {
-    navigate("/home");
-  }
   const url = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${API_KEY}`;
 
   const searchWeather = async (e) => {
@@ -33,10 +31,9 @@ function App() {
 // Navigation의 내용은 백그라운드의 내용은 배경색을 aqua로 지정하고 글자색을 #fff로 지정한다
 // 그리고 flex를 사용한 뒤 space-between를 사용해서 정렬을 해주고 패딩도 줌
   return (
+    <>
+    <Nav></Nav>
     <AppWrap>
-      <Navigation>
-        
-      </Navigation>
       <div className="appContentWrap">
         <input
           placeholder="도시를 입력하세요"
@@ -55,12 +52,11 @@ function App() {
           </ResultWrap>
         )}
       </div>
-      <button onClick={handleClickButton}>Home</button>
-    </AppWrap>
+    </AppWrap></>
   );
 }
 
-export default App;
+export default Search;
 
 const AppWrap = styled.div`
   width: 100vw;
@@ -78,14 +74,6 @@ const AppWrap = styled.div`
     border: 2px black solid;
     border-radius: 16px;
   }
-`;
-
-const Navigation = styled.div`
-  background-color: aqua;
-  color: #fff;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
 `;
 
 const ResultWrap = styled.div`
