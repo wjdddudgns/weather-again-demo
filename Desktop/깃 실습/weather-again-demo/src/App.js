@@ -8,12 +8,12 @@ import Search from './pages/CompleteLogin/body/Search';
 export default function App() {
   return (
    <Routes>
-        <Route path="/Login" element={<Login />} />
-        <Route path="/user" element={<CompleteLogin />}>
+      <Route path="/Login" element={<Login />} />
+      <Route path="/Join" element={<Join />} />    
+      <Route path="/user" element={<CompleteLogin />}>
           <Route path="search" element={<Search />}/>
           <Route path="Information" element={<Information />} />
-        </Route>
-        <Route path="/Join" element={<Join />} />      
+      </Route>  
     </Routes>
   );
 }
